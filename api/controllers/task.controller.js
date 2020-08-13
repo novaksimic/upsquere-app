@@ -1,6 +1,5 @@
 const Task = require("../models/task.model");
 const TaskList = require("../models/taskList.model");
-const bodyparser = 
 
 exports.getTasks = (req, res, next) => {
 

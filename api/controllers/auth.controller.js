@@ -1,14 +1,6 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 
-
-
-exports.getLogin = (req, res, next) => {
-
-
-
-}
-
 exports.postLogin = (req, res, next) => {
 
     const email = req.body.email;
@@ -32,12 +24,6 @@ exports.postLogin = (req, res, next) => {
 exports.postLogout = (req, res, next) => {
 
     res.status(200).redirect('/');
-}
-
-exports.getsignup = (req, res, next) => {
-
-
-
 }
 
 exports.postSignup = (req, res, next) => {
