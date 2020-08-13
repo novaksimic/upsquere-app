@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
 exports.postLogin = (req, res, next) => {
 
@@ -8,7 +9,18 @@ exports.postLogin = (req, res, next) => {
 
     User.findOne({email: email})
         .then(user => {
-            bcrypt.compare(password, user.password)
+            if(user.length > 1) {
+                return res.status(401).json({
+                    message: 'Auth failed'
+                });
+            }
+            bcrypt.compare(password, user.password, (err ,res) => {
+                if(err) {
+                    return res.status(401).json({
+                        message: 'Auth failed'
+                    });
+                }
+            })
             .then(doMatch => {
                 if(doMatch) {
                     return res. redirect('/');
