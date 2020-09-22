@@ -1,0 +1,9 @@
+{{task.id}}
+{{task.title}}
+{{task.description}}
+{{task.status}}
+{{task.owner}}
+{{task.date}}
+<button class="btn btn-dark float-right mx-2" (click)="onDelete()">Delete</button>
+<button class="btn btn-danger float-right" [routerLink]="['/task/details/', task.id]">Details</button>
+<button class="btn btn-danger float-right" [routerLink]="['/task/update/', task.id]">Update</button>
