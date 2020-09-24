@@ -3,7 +3,7 @@
 </div>
 <div>
   <h1>Create Task</h1>
-  <form [formGroup]="productForm" (ngSubmit)="submitForm()" novalidate>
+  <form [formGroup]="taskForm" (ngSubmit)="submitForm()" novalidate>
       <div class="form-group">
           <label>Title</label>
           <input type="text" formControlName="name" class="form-control" maxlength="20">
