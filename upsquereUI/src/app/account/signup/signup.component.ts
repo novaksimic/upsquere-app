@@ -40,16 +40,18 @@ export class SignupComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
-
+        
         this.loading = true;
         this.accountService.register(this.form.value)
             .pipe(first())
             .subscribe(
                 data => {
+                    console.log('User created');
                     this.alertService.success('Registration successful', { keepAfterRouteChange: true });
                     this.router.navigate(['../login'], { relativeTo: this.route });
                 },
                 error => {
+                    console.log(error);
                     this.alertService.error(error);
                     this.loading = false;
                 });

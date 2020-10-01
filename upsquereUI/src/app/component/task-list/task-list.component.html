@@ -1,9 +1,18 @@
-<div class="card card-header mt-4" *ngIf="tasks.length == 0">
-    <h6>Tasks not present!!!</h6>
-  </div>
+<div class="centered-content">
+    <div class="modal-box">
+      <h1 class="title has-text-primary">
+        Create a new list
+      </h1>
   
-  <ul class="list-group mt-4">
-    <li class="list-group-item" *ngFor="let task of tasks">
-      <app-task-item [task]="task"></app-task-item>
-    </li>
-  </ul>
+      <input #listTitleInput class="input has-background-light is-normal" type="text" placeholder="Enter list name...">
+      <br><br>
+      <div class="buttons is-right">
+        <button routerLink="/" class="button is-normal">
+          Cancel
+        </button>
+        <button (click)="createList(listTitleInput.value)" class="button is-primary has-text-white is-normal">
+          Create
+        </button>
+      </div>
+    </div>
+  </div>

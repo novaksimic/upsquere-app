@@ -3,18 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { LayoutComponent } from './layout/layout.component';
 
 
 const routes: Routes = [
-  {
-    path: 'account', component: LayoutComponent,
-    children: [
-      { path: 'account/login', component: LoginComponent },
-      { path: 'account/signup', component: SignupComponent},
-      { path: 'account/reset-password', component: ResetPasswordComponent}
-    ]
-  }
+      { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignupComponent },
+      { path: 'reset-password', component: ResetPasswordComponent }
+     // { path: 'confirm-email', component: ConfirmEmailComponent }, treba da se uradi 
+    //  { path: 'change-password', component: ChangePasswordComponent } treba da se uradi
 ];
 
 @NgModule({

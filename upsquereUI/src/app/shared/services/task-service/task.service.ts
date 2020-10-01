@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { Task } from '../../models/task';
+import { WebRequestService } from '../web-request/web-request.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,42 +19,44 @@ export class TaskService {
   }
 
   constructor(private http: HttpClient,
-    private router: Router) {
+    private router: Router, private webRequestService: WebRequestService) {
   }
 
-  public getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(`${environment.apiUrl}/api/tasks`, this.httpOptions)
-      .pipe(
-        catchError(this.errorHandler)
-      );
+  getLists() {
+    return this.webRequestService.get('lists');
   }
 
-  public getTask(id: string): Observable<Task> {
-    return this.http.get<Task>(`${environment.apiUrl}/api/tasks/` + id)
-      .pipe(
-        catchError(this.errorHandler)
-      );
+  createList(title: string) {
+    return this.webRequestService.post('lists', { title });
   }
 
-  public addTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(`${environment.apiUrl}/api/tasks`, JSON.stringify(task), this.httpOptions)
-      .pipe(
-        catchError(this.errorHandler)
-      );;
+  updateList(id: string, title: string) {
+    //Send web request to create List
+    //returns an Observable to subscribe to
+    return this.webRequestService.patch(`lists/${id}`, { title });
   }
 
-  public updateTask(id: string, task: Task): Observable<Task> {
-    return this.http.post<Task>(`${environment.apiUrl}/api/tasks/` + id, JSON.stringify(task))
-      .pipe(
-        catchError(this.errorHandler)
-      );;
+  deleteList(id: string) {
+    return this.webRequestService.delete(`lists/${id}`);
   }
 
-  public deleteTask(id: string): Observable<Task> {
-    return this.http.delete<Task>(`${environment.apiUrl}/api/tasks/` + id, this.httpOptions)
-      .pipe(
-        catchError(this.errorHandler)
-      );;
+
+  public getTasks(listId: string) {
+    return this.webRequestService.get(`api/${listId}/tasks`);
+  }
+
+  public addTask(title: string, listId: string) {
+    return this.webRequestService.post(`api/lists/${listId}/tasks`, {title});
+  }
+
+  updateTask(listId: string, taskId: string, title: string) {
+    //Send web request to create List
+    //returns an Observable to subscribe to
+    return this.webRequestService.patch(`api/lists/${listId}/tasks/${taskId}`, { title });
+  }
+
+  deleteTask(listId: string, taskId: string) {
+    return this.webRequestService.delete(`api/lists/${listId}/tasks/${taskId}`);
   }
 
   public deleteTasks(): Observable<Task[]> {
@@ -61,6 +64,12 @@ export class TaskService {
       .pipe(
         catchError(this.errorHandler)
       );;
+  }
+
+  complete(task: Task) {
+    return this.webRequestService.patch(`lists/${task.listId}/tasks/${task.id}`, {
+      completed: !task.completed
+    });
   }
 
   errorHandler(error) {

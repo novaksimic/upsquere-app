@@ -5,11 +5,10 @@ import { SignupComponent } from './signup/signup.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
-import { LayoutComponent } from './layout/layout.component';
 
 
 @NgModule({
-  declarations: [LayoutComponent, LoginComponent, SignupComponent, ResetPasswordComponent],
+  declarations: [LoginComponent, SignupComponent, ResetPasswordComponent],
   imports: [
     CommonModule,
     AccountRoutingModule,

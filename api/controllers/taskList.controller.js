@@ -11,14 +11,21 @@ exports.getLists = (req, res, next) => {
         });
 }
 
+exports.getList = (req, res, next) => {
+    
+    const listId = req.params.listId;
+    
+    TaskList.findOne({id: listId}).then((list) => {
+        res.status(200).send(list);
+    });
+}
+
 exports.postList = (req, res, next) => {
 
-    let id = req.params.id;
     let title = req.body.title;
     let userId = req.body.userId;
 
     let newTaskList = new TaskList({
-            id,
             title,
             userId
         });

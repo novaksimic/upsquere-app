@@ -9,11 +9,12 @@ const taskSchema = new mongoose.Schema({
         minlength: 1,
         trim: true   
     },
-    checked: {
+    completed: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
-    taskListId: {
+    listId: {
             type: Schema.Types.ObjectId,
             required: true,
             ref: 'TaskList'

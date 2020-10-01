@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/shared/models/task';
 import { TaskService } from 'src/app/shared/services/task-service/task.service';
+import { Router } from '@angular/router';
+import { List } from 'src/app/shared/models/list';
 
 
 @Component({
@@ -9,16 +11,16 @@ import { TaskService } from 'src/app/shared/services/task-service/task.service';
   styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Task[] = [];
 
-  constructor(private ts: TaskService) { }
+  constructor(private ts: TaskService, private router: Router) { }
 
   ngOnInit() {
-    this.ts.getTasks().subscribe((data: Task[]) => {
-      console.log(data);
-      this.tasks = data;
-    })
   }
 
+  createList(title: string) {
+    this.ts.createList(title).subscribe((list: List) => {
+      //Navigate back to Lists view with this list selected
+      this.router.navigate(['/lists',list.id])
+    })
 
 }

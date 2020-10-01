@@ -6,16 +6,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccountModule } from './account/account.module';
 import { TaskManagerModule } from './component/task-manager.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptor, ErrorInterceptor } from './auth/helpers';
-import { AlertComponent } from './auth/components/alert';
-import { TaskManagerComponent } from './component/task-manager/task-manager.component';
+import {  HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AlertComponent,
-    TaskManagerComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -25,8 +20,7 @@ import { TaskManagerComponent } from './component/task-manager/task-manager.comp
     AccountModule,
     TaskManagerModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-              { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

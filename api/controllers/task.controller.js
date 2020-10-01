@@ -16,27 +16,31 @@ exports.getTasks = (req, res, next) => {
     });
 }
 
+exports.getTask = (req, res, next) => {
+    const taskId = req.params.id;
+    const listId = req.params.listId
+
+    Task.findOne({
+        id: taskId,
+        listId
+    }).then((task) => {
+        res.send(task);
+    });
+}
+
 exports.postTask = (req, res, next) => {
 
     let title = req.body.title;
     let listId = req.params.id;
 
-    TaskList.findOne({
-        id: req.params.listId,
-        userId: req.user.id
-    })
-    .then(list => {
-        if(list) {
-            let newTask = new Task({
-                title,
-                listId
-            });
-        newTask.save().then(newTaskDoc => {
+    let newTask = new Task({
+        title,
+        listId
+    });
+    newTask.save().then(newTaskDoc => {
             return res.send(newTaskDoc)
-        })
-        } else {
-            return res.sendStatus(404);
-        }        
+    }).catch(err => {
+        return res.sendStatus(404);
     });
 }
 
@@ -48,20 +52,14 @@ exports.patchTask = (req, res, next) => {
 
     let taskId = req.params.taskId;
 
-    TaskList.findOne({
-        id: listId,
-        userId
-    })
-    .then(list => {
-        if(list) {
-            Task.findOneAndUpdate({
-                id: taskId,
-                listid
-            }, {$set: req.body})
-            .then(() => {
-                res.send({message: "Updated successfully"});
-            })
-        }
+   Task.findOneAndUpdate({
+       id: taskId,
+       listId,
+       userId
+   }, {$set: req.body})
+    .then(() => {
+        res.send({message: "Updated successfully"});
+    }).catch(err => {
         res.sendStatus(404);
     });
 }
@@ -72,23 +70,15 @@ exports.deleteTask = (req, res, next) => {
     let listId = req.params.listId;
     let userId = req.user.id;
 
-    TaskList.findOne({
-        id: listId,
+    Task.findOneAndRemove({
+        id: taskId,
+        listId,
         userId
     })
-    .then(list => {
-        if(list) {
-            Task.findOneAndRemove({
-                id: taskId,
-                listId
-            })
-            .then(removedTask => {
-                return res.send(removedTask);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        }
+    .then((removedTask) => {
+        return res.send(removedTask);
+    })
+    .catch(err => {
         return res.sendStatus(404);
     });
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
 import { TaskService } from 'src/app/shared/services/task-service/task.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Task } from 'src/app/shared/models/task';
 
 @Component({
   selector: 'app-task-form',
@@ -9,27 +9,24 @@ import { TaskService } from 'src/app/shared/services/task-service/task.service';
   styleUrls: ['./task-form.component.scss']
 })
 export class TaskFormComponent implements OnInit {
-  taskForm: FormGroup;
+  public title:string = '';
+  formSubmitted: boolean = false;
+  constructor(private ts: TaskService, private route: ActivatedRoute, private router: Router) { }
 
-  constructor(private ts: TaskService, 
-    public fb: FormBuilder, 
-    private router: Router) { }
+  listId: string;
 
   ngOnInit() {
-    this.taskForm = this.fb.group({
-      title: [''],
-      description: [''],
-      status: [''],
-      owner: [''],
-      date: new Date()
+    this.route.params.subscribe((params: Params) => {
+      this.listId = params.listId;
+    });
+  }
+
+  createTask(title: string) {
+    this.ts.addTask(title, this.listId).subscribe((task: Task) => {
+      //Navigates to one sublevel before in url (i.e. List view)
+      this.router.navigate(['../'], {relativeTo: this.route});
     })
   }
 
-  submitForm() {
-    this.ts.addTask(this.taskForm.value).subscribe(res => {
-      console.log('Task created!');
-      this.router.navigateByUrl('/');
-    });
-  }
  
 }

@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Task } from 'src/app/shared/models/task';
 import { TaskService } from 'src/app/shared/services/task-service/task.service';
-import { MessageService } from 'src/app/shared/services/task-service/message.service';
-
 
 @Component({
   selector: 'app-task-item',
@@ -10,19 +8,16 @@ import { MessageService } from 'src/app/shared/services/task-service/message.ser
   styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent implements OnInit {
+  @Input()task:Task
 
-  @Input()task: Task
-
-  constructor(private ts: TaskService, private msgService: MessageService) { }
+  constructor(private ts:TaskService) { }
 
   ngOnInit(): void {
   }
 
-  onDelete(){
-    this.ts.deleteTask(this.task.id).subscribe((task) => {
-      console.log(task);
-      this.msgService.setMessage('Something happened');
+  onDelete() {
+    this.ts.deleteTask(this.task.id).subscribe((dotman) => {
+      console.log(dotman)
     })
   }
-
 }
