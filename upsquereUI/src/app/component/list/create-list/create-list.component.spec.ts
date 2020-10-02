@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaskManagerComponent } from './task-manager.component';
+import { CreateListComponent } from './create-list.component';
 
-describe('TaskManagerComponent', () => {
-  let component: TaskManagerComponent;
-  let fixture: ComponentFixture<TaskManagerComponent>;
+describe('CreateListComponent', () => {
+  let component: CreateListComponent;
+  let fixture: ComponentFixture<CreateListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskManagerComponent ]
+      declarations: [ CreateListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskManagerComponent);
+    fixture = TestBed.createComponent(CreateListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,5 +22,4 @@ describe('TaskManagerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
 });

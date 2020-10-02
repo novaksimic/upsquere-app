@@ -12,37 +12,37 @@ import { WebRequestService } from '../web-request/web-request.service';
 })
 export class TaskService {
 
-  httpOptions = {
+/*   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
+  } */
+
+  constructor(private webRequestService: WebRequestService) {
   }
 
-  constructor(private http: HttpClient,
-    private router: Router, private webRequestService: WebRequestService) {
-  }
-
+  // LIST
   getLists() {
-    return this.webRequestService.get('lists');
+    return this.webRequestService.get('api/lists');
   }
 
   createList(title: string) {
-    return this.webRequestService.post('lists', { title });
+    return this.webRequestService.post('api/lists', { title });
   }
 
   updateList(id: string, title: string) {
     //Send web request to create List
     //returns an Observable to subscribe to
-    return this.webRequestService.patch(`lists/${id}`, { title });
+    return this.webRequestService.patch(`api/lists/${id}`, { title });
   }
 
   deleteList(id: string) {
-    return this.webRequestService.delete(`lists/${id}`);
+    return this.webRequestService.delete(`api/lists/${id}`);
   }
 
-
+  // TASK
   public getTasks(listId: string) {
-    return this.webRequestService.get(`api/${listId}/tasks`);
+    return this.webRequestService.get(`api/lists/${listId}/tasks`);
   }
 
   public addTask(title: string, listId: string) {
@@ -59,12 +59,12 @@ export class TaskService {
     return this.webRequestService.delete(`api/lists/${listId}/tasks/${taskId}`);
   }
 
-  public deleteTasks(): Observable<Task[]> {
+/*   public deleteTasks(): Observable<Task[]> {
     return this.http.delete<Task[]>(`${environment.apiUrl}/api/tasks`, this.httpOptions)
       .pipe(
         catchError(this.errorHandler)
       );;
-  }
+  } */
 
   complete(task: Task) {
     return this.webRequestService.patch(`lists/${task.listId}/tasks/${task.id}`, {
@@ -72,7 +72,7 @@ export class TaskService {
     });
   }
 
-  errorHandler(error) {
+/*   errorHandler(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Get client-side error
@@ -83,5 +83,5 @@ export class TaskService {
     }
     console.log(errorMessage);
     return throwError(errorMessage);
-  }
+  } */
 }

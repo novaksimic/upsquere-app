@@ -28,38 +28,41 @@ $task-manager-ui-theme: mat-light-theme($task-manager-ui-primary, $task-manager-
 
 /* You can add global styles to this file, and also import other style files */
 
-@import 'main-styles';
-@import '../node_modules/bulma/bulma.sass';
 @import 'https://unpkg.com/bootstrap@4.1.1/dist/css/bootstrap.min.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// This is where we put global styles and changes variables values
 
-//Define Color Palette
-$amethyst: #9966cc;
-$purple: #7c49d7;
-$light-purple: #beb2f6;
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700|Nunito:400,700');
+
+$turquoise: #44ddd0;
+$green: #27d7a1;
+$light-green: #45f69e;
+$dark-green: rgb(0, 100, 80);
+
 $light: #f8f8f8;
-$dark-purple: #492464;
 
-//Update Bulma global variables
+//Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
-$primary: $purple;
+$primary: $green;
 
-$link: $light-purple;
+$link: $light-green;
 
-//Update Bulma component variables
+//Update some of Bulma's component variables
+
 $control-border-width: 2px;
-$import-border-color: transparent;
+$input-border-color: transparent;
 $input-shadow: none;
-
 
 @import '../node_modules/bulma/bulma.sass';
 
 //Custom global styles
 
 html {
-  background: linear-gradient(to right top, $amethyst, $purple);
+  background: linear-gradient(to right top, $turquoise, $green);
+}
+
+html, body {
+  height: 100%;
 }
 
 .centered-content {

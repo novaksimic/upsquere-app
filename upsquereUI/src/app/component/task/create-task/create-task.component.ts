@@ -4,13 +4,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Task } from 'src/app/shared/models/task';
 
 @Component({
-  selector: 'app-task-form',
-  templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss']
+  selector: 'app-create-task',
+  templateUrl: './create-task.component.html',
+  styleUrls: ['./create-task.component.scss']
 })
-export class TaskFormComponent implements OnInit {
-  public title:string = '';
-  formSubmitted: boolean = false;
+export class CreateTaskComponent implements OnInit {
+
   constructor(private ts: TaskService, private route: ActivatedRoute, private router: Router) { }
 
   listId: string;
@@ -24,9 +23,8 @@ export class TaskFormComponent implements OnInit {
   createTask(title: string) {
     this.ts.addTask(title, this.listId).subscribe((task: Task) => {
       //Navigates to one sublevel before in url (i.e. List view)
-      this.router.navigate(['../'], {relativeTo: this.route});
+      this.router.navigate(['../', { relativeTo: this.route }]);
     })
   }
 
- 
 }
